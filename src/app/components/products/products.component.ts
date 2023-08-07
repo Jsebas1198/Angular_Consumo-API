@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Product } from '../../models/product.model';
+import { CreateProductDTO, Product } from '../../models/product.model';
 
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
@@ -52,30 +52,53 @@ export class ProductsComponent implements OnInit {
   }
 
   //Muestra la información del producto seleccionado
-  onShowDetail(id:string){
+  onShowDetail(id: string) {
     //en caso de que den dos veces al botón solo ocultara los detalles(para no ir a darle al botón de cerrar)
-    if(this.productChosen.id != '' && this.productChosen.id == id && this.showProductDetail==true){
+    if (
+      this.productChosen.id != '' &&
+      this.productChosen.id == id &&
+      this.showProductDetail == true
+    ) {
       this.showProductDetail = false;
       return;
     }
 
     //en caso de que seleccionen el mismo producto ya no hay necesidad de hacer la petición de nuevo y solo vuelve a mostrar el panel
-    if(this.productChosen.id != '' && this.productChosen.id == id && this.showProductDetail==false){
+    if (
+      this.productChosen.id != '' &&
+      this.productChosen.id == id &&
+      this.showProductDetail == false
+    ) {
       this.showProductDetail = true;
       return;
     }
     //en caso que le den al botón de ver detalles mientras ya están abiertos los de un producto diferente cierra el panel de detalles
-    if(this.productChosen.id != '' && this.productChosen.id != id && this.showProductDetail==true){
+    if (
+      this.productChosen.id != '' &&
+      this.productChosen.id != id &&
+      this.showProductDetail == true
+    ) {
       this.showProductDetail = false;
     }
 
-    this.productsService.getProduct(id)
-    .subscribe(data => {
+    this.productsService.getProduct(id).subscribe((data) => {
       this.productChosen = data;
-      if(!this.showProductDetail){
+      if (!this.showProductDetail) {
         this.toggleProductDetail();
       }
+    });
+  }
 
+  createNewProduct() {
+    const product: CreateProductDTO = {
+      title: 'Nuevo producto',
+      description: 'bla bla bla',
+      images: [`https://placeimg.com/640/480/any?random=${Math.random()}`],
+      price: 1000,
+      categoryId: 2,
+    };
+    this.productsService.create(product).subscribe((data) => {
+      this.products.unshift(data);
     });
   }
 }
