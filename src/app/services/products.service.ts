@@ -12,7 +12,8 @@ import {
   providedIn: 'root',
 })
 export class ProductsService {
-  private apiUrl = 'https://api.escuelajs.co/api/v1/products';
+  // private apiUrl = 'https://api.escuelajs.co/api/v1/products';
+  private apiUrl = '/api/products';
   constructor(private http: HttpClient) {}
 
   //Trae todos los productos, se le agregó paginación
