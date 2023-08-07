@@ -21,11 +21,18 @@ export class ProductComponent {
     description: ''
   };
   @Output() addedProduct = new EventEmitter<Product>();
+  @Output() showProduct = new EventEmitter<string>();
 
   constructor() { }
 
+  //Emite un evento que permite detectar que se agregó un producto al carrito
   onAddToCart() {
     this.addedProduct.emit(this.product);
+  }
+
+  //Emite un evento para que se detecte que id se envió
+  onShowDetail() {
+    this.showProduct.emit(this.product.id);
   }
 
 }
