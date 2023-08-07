@@ -15,6 +15,9 @@
           <img [src]="img" width="40%" alt="{{ productChosen.title }}" />
         </swiper-slide>
       </swiper-container>
+      <p>{{ productChosen.description }}</p>
+      <button (click)="updateProduct()">editar</button>
+      <button (click)="deleteProduct()">delete</button>
     </div>
   </div>
 </div>
